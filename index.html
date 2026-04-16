@@ -1,90 +1,208 @@
-"use client"
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3uto Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 自定义品牌色 - 你可以在这里调颜色 */
+        :root {
+            --primary: #171717;
+            --accent: #3b82f6;
+        }
+        .bg-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mobile-menu {
+            display: none;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900 font-sans antialiased">
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-semibold tracking-tight text-neutral-900">3uto Studio</h1>
+                </div>
 
-export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">首页</a>
+                    <a href="#about" class="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">关于</a>
+                    <a href="#services" class="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">服务</a>
+                    <a href="#contact" class="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">联系</a>
+                    <button class="bg-neutral-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-neutral-800 transition-colors">
+                        开始合作
+                    </button>
+                </div>
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const navItems = [
-    { name: "首页", href: "#home" },
-    { name: "关于我们", href: "#about" },
-    { name: "服务", href: "#services" },
-    { name: "联系我们", href: "#contact" },
-  ]
-
-  return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-primary">品牌名称</h1>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-foreground hover:text-accent transition-colors duration-200 px-3 py-2 text-sm font-medium"
-                >
-                  {item.name}
-                </a>
-              ))}
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-neutral-600 hover:text-neutral-900">
+                    <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
-          </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">立即联系</Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <Button variant="ghost" size="sm" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
-          </div>
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4">
+                <div class="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg px-4 py-3 space-y-2 mt-2">
+                    <a href="#home" class="block px-3 py-2 text-base font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 rounded-md">首页</a>
+                    <a href="#about" class="block px-3 py-2 text-base font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 rounded-md">关于</a>
+                    <a href="#services" class="block px-3 py-2 text-base font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 rounded-md">服务</a>
+                    <a href="#contact" class="block px-3 py-2 text-base font-medium text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50 rounded-md">联系</a>
+                    <button class="w-full mt-2 bg-neutral-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-neutral-800">
+                        开始合作
+                    </button>
+                </div>
+            </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-sm rounded-lg mt-2">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-foreground hover:text-accent block px-3 py-2 text-base font-medium transition-colors duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <div className="pt-2">
-                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">立即联系</Button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
     </nav>
-  )
-}
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-neutral-50 to-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-neutral-100 text-neutral-600 text-sm font-medium mb-6">
+                设计工程师 · 创意开发者
+            </span>
+            <h1 class="text-4xl md:text-6xl font-medium tracking-tight text-neutral-900 mb-6">
+                3uto Studio
+            </h1>
+            <p class="text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                专注于 AI 产品界面与系统架构设计。<br>
+                相信技术应该优雅且触手可及。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#services" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-neutral-900 hover:bg-neutral-800 transition-colors">
+                    查看服务
+                </a>
+                <a href="#contact" class="inline-flex items-center justify-center px-6 py-3 border border-neutral-300 text-base font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50 transition-colors">
+                    联系我
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-medium tracking-tight text-neutral-900 mb-8">关于</h2>
+            <p class="text-neutral-600 leading-relaxed mb-6">
+                3uto Studio 是一个专注于 AI 产品设计与工程化落地的独立工作室。
+                我们关注 Harness Engineering、Agent 架构与记忆系统的人机交互设计。
+            </p>
+            <p class="text-neutral-600 leading-relaxed">
+                从概念验证到生产级部署，提供全流程技术咨询与界面实现。
+            </p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 px-4 sm:px-6 lg:px-8 bg-neutral-50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-medium tracking-tight text-neutral-900 mb-12 text-center">服务</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="text-lg font-medium mb-2">AI 产品界面设计</h3>
+                    <p class="text-neutral-600 text-sm">从 LLM 交互到 Agent 工作流，设计自然流畅的人机对话体验。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="text-lg font-medium mb-2">系统架构咨询</h3>
+                    <p class="text-neutral-600 text-sm">基于 PostgreSQL、pgvector 的记忆系统架构设计与实现。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="text-lg font-medium mb-2">前端工程化</h3>
+                    <p class="text-neutral-600 text-sm">Next.js、React、Tailwind 全栈开发与 Vercel 部署优化。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="text-lg font-medium mb-2">MVP 快速验证</h3>
+                    <p class="text-neutral-600 text-sm">2-4 周内将概念转化为可演示的产品原型。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-xl mx-auto text-center">
+            <h2 class="text-3xl font-medium tracking-tight text-neutral-900 mb-6">联系</h2>
+            <p class="text-neutral-600 mb-8">有项目想法？欢迎随时交流。</p>
+            <a href="mailto:hello@3uto.studio" class="inline-flex items-center justify-center px-8 py-3 border border-neutral-900 text-base font-medium rounded-md text-neutral-900 hover:bg-neutral-900 hover:text-white transition-colors">
+                hello@3uto.studio
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 bg-neutral-50 border-t border-neutral-200">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-neutral-500">© 2026 3uto Studio. All rights reserved.</p>
+            <div class="flex gap-6 text-sm text-neutral-500">
+                <a href="#" class="hover:text-neutral-900">GitHub</a>
+                <a href="#" class="hover:text-neutral-900">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+        let isMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.add('active');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        });
+
+        // 点击链接后关闭菜单
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('active');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            });
+        });
+
+        // 滚动时改变导航栏样式
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('bg-scrolled');
+                navbar.classList.remove('bg-transparent');
+            } else {
+                navbar.classList.remove('bg-scrolled');
+                navbar.classList.add('bg-transparent');
+            }
+        });
+    </script>
+</body>
+</html>
